@@ -24,6 +24,11 @@
                         Olá, {{ auth()->user()->name }}
                     </span>
 
+                    <a href="{{ route('home') }}"
+                        class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow">
+                        Explorar Eventos
+                    </a>
+
                     @if (auth()->user()->role === 'organizer')
                         <a href="{{ route('organizer.dashboard') }}"
                             class="inline-flex items-center justify-center bg-gray-600 hover:bg-gray-700 !text-white font-semibold px-4 py-2 rounded shadow">

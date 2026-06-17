@@ -12,23 +12,23 @@
 
     </div>
 
-    <form method="GET" class="mb-8">
+    <div class="mb-10 flex flex-wrap gap-2 justify-center">
 
-        <select name="category" onchange="this.form.submit()" class="border-gray-300 rounded px-4 py-2">
+        <a href="{{ route('home') }}"
+            class="inline-flex items-center justify-center px-4 py-2 rounded-full shadow font-semibold
+        {{ request('category') ? 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100' : 'bg-blue-500 hover:bg-blue-700 !text-white' }}">
+            Todas
+        </a>
 
-            <option value="">
-                Todas as categorias
-            </option>
+        @foreach ($categories as $category)
+            <a href="{{ route('home', ['category' => $category->id]) }}"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-full shadow font-semibold
+            {{ request('category') == $category->id ? 'bg-blue-500 hover:bg-blue-700 !text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100' }}">
+                {{ $category->name }}
+            </a>
+        @endforeach
 
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}" @selected(request('category') == $category->id)>
-                    {{ $category->name }}
-                </option>
-            @endforeach
-
-        </select>
-
-    </form>
+    </div>
 
     <div class="grid md:grid-cols-3 gap-6">
 
@@ -69,7 +69,7 @@
                     </p>
 
                     <a href="{{ route('events.show', $event) }}"
-                        class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow">
+                        class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow mt-2">
                         Ver detalhes
                     </a>
 
