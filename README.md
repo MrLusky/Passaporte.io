@@ -205,4 +205,6 @@ Senha:
 
 ## Autor
 
+Lucas Daniel de Araujo Pereira
+
 Projeto desenvolvido para fins acadêmicos na disciplina de Programação Web III.

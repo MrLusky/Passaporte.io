@@ -36,8 +36,10 @@
             <div class="bg-white rounded-lg shadow overflow-hidden">
 
                 <div class="bg-gray-100 h-48 flex items-center justify-center overflow-hidden">
-                    <img src="{{ asset('storage/' . $event->banner_path) }}" alt="{{ $event->title }}"
-                        class="max-h-48 max-w-full object-contain">
+                    <img src="{{ str_starts_with($event->banner_path, 'images/')
+                        ? asset($event->banner_path)
+                        : asset('storage/' . $event->banner_path) }}"
+                        alt="{{ $event->title }}" class="max-h-48 max-w-full object-contain">
                 </div>
 
                 <div class="p-4">

@@ -28,20 +28,31 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'min:5', 'max:255'],
-            'description' => ['required', 'min:20'],
-            'date_time' => ['required', 'date', 'after:now'],
-            'location' => ['required', 'max:255'],
-            'capacity' => ['required', 'integer', 'min:1'],
-            'category_id' => ['required', 'exists:categories,id'],
+        $validated = $request->validate(
+    [
+        'title' => ['required', 'min:5', 'max:255'],
+        'description' => ['required', 'min:20'],
+        'date_time' => ['required', 'date', 'after:now'],
+        'location' => ['required', 'max:255'],
+        'capacity' => ['required', 'integer', 'min:1'],
+        'category_id' => ['required', 'exists:categories,id'],
 
-            'banner' => [
-                'required',
-                'image',
-                'max:2048',
-            ],
-        ]);
+        'banner' => [
+            'nullable',
+            'image',
+            'max:2048',
+        ],
+    ],
+    [
+        'title.required' => 'O título é obrigatório.',
+        'description.required' => 'A descrição é obrigatória.',
+        'date_time.after' => 'A data do evento deve ser futura.',
+        'category_id.required' => 'Selecione uma categoria.',
+
+        'banner.image' => 'O banner deve ser uma imagem válida.',
+        'banner.max' => 'A imagem do banner deve ter no máximo 2 MB.',
+    ]
+);
 
         $bannerPath = $request
             ->file('banner')
@@ -75,20 +86,31 @@ class EventController extends Controller
     {
         abort_if($event->user_id !== auth()->id(), 403);
 
-        $validated = $request->validate([
-            'title' => ['required', 'min:5', 'max:255'],
-            'description' => ['required', 'min:20'],
-            'date_time' => ['required', 'date', 'after:now'],
-            'location' => ['required', 'max:255'],
-            'capacity' => ['required', 'integer', 'min:1'],
-            'category_id' => ['required', 'exists:categories,id'],
+        $validated = $request->validate(
+            [
+                'title' => ['required', 'min:5', 'max:255'],
+                'description' => ['required', 'min:20'],
+                'date_time' => ['required', 'date', 'after:now'],
+                'location' => ['required', 'max:255'],
+                'capacity' => ['required', 'integer', 'min:1'],
+                'category_id' => ['required', 'exists:categories,id'],
 
-            'banner' => [
-                'nullable',
-                'image',
-                'max:2048',
+                'banner' => [
+                    'nullable',
+                    'image',
+                    'max:2048',
+                ],
             ],
-        ]);
+            [
+                'title.required' => 'O título é obrigatório.',
+                'description.required' => 'A descrição é obrigatória.',
+                'date_time.after' => 'A data do evento deve ser futura.',
+                'category_id.required' => 'Selecione uma categoria.',
+
+                'banner.image' => 'O banner deve ser uma imagem válida.',
+                'banner.max' => 'A imagem do banner deve ter no máximo 2 MB.',
+            ]
+        );
 
         if ($request->hasFile('banner')) {
 
