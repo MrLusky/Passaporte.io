@@ -12,18 +12,18 @@ class PublicEventController extends Controller
     {
         $events = Event::with([
             'organizer',
-            'category'
+            'category',
         ])
-        ->when(
-            $request->category,
-            fn ($query) =>
-                $query->where(
+            ->withCount('participants')
+            ->when(
+                $request->category,
+                fn ($query) => $query->where(
                     'category_id',
                     $request->category
                 )
-        )
-        ->latest()
-        ->paginate(12);
+            )
+            ->latest()
+            ->paginate(12);
 
         $categories = Category::orderBy('name')->get();
 
@@ -37,8 +37,10 @@ class PublicEventController extends Controller
     {
         $event->load([
             'organizer',
-            'category'
+            'category',
         ]);
+
+        $event->loadCount('participants');
 
         return view(
             'public.show',

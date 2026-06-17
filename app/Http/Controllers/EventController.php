@@ -82,7 +82,22 @@ class EventController extends Controller
             'location' => ['required', 'max:255'],
             'capacity' => ['required', 'integer', 'min:1'],
             'category_id' => ['required', 'exists:categories,id'],
+
+            'banner' => [
+                'nullable',
+                'image',
+                'max:2048',
+            ],
         ]);
+
+        if ($request->hasFile('banner')) {
+
+            $bannerPath = $request
+                ->file('banner')
+                ->store('events', 'public');
+
+            $validated['banner_path'] = $bannerPath;
+        }
 
         $event->update($validated);
 
@@ -94,6 +109,12 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         abort_if($event->user_id !== auth()->id(), 403);
+
+        if ($event->participants()->count() > 0) {
+            return redirect()
+                ->route('events.index')
+                ->with('error', 'Este evento possui participantes inscritos e não pode ser excluído.');
+        }
 
         $event->delete();
 

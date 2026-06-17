@@ -10,6 +10,7 @@ class EventParticipantController extends Controller
     public function index()
     {
         $events = Event::with('category')
+            ->withCount('participants')
             ->latest()
             ->paginate(10);
 
@@ -83,5 +84,24 @@ class EventParticipantController extends Controller
             'participant.tickets.show',
             compact('ticket')
         );
+    }
+
+    public function unsubscribe(Event $event)
+    {
+        $isSubscribed = auth()
+            ->user()
+            ->subscribedEvents()
+            ->where('event_id', $event->id)
+            ->exists();
+
+        if (! $isSubscribed) {
+            return back()->with('error', 'Você não está inscrito neste evento.');
+        }
+
+        auth()->user()
+            ->subscribedEvents()
+            ->detach($event->id);
+
+        return back()->with('success', 'Inscrição cancelada com sucesso.');
     }
 }

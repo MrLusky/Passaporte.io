@@ -31,7 +31,7 @@
 
         <button
             type="submit"
-            class="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+            class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow"
         >
             Validar
         </button>

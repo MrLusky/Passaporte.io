@@ -7,7 +7,7 @@
 
     <div class="p-6">
 
-        <form method="POST" action="{{ route('events.update', $event) }}">
+        <form method="POST" action="{{ route('events.update', $event) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -108,7 +108,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">
+            <button type="submit" class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow">
 
                 Salvar Evento
 
