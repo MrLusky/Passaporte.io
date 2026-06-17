@@ -34,6 +34,10 @@
                             class="inline-flex items-center justify-center bg-gray-600 hover:bg-gray-700 !text-white font-semibold px-4 py-2 rounded shadow">
                             Meus Eventos
                         </a>
+                        <a href="{{ route('events.checkin.form') }}"
+                            class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-700 !text-white font-semibold px-4 py-2 rounded shadow">
+                            Check-in
+                        </a>
                     @endif
 
                     @if (auth()->user()->role === 'participant')
